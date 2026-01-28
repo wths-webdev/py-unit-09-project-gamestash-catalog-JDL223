@@ -16,13 +16,11 @@ def get_inventory_count():
 
 # add_game(title, year): Adds a game to the inventory.
 def add_game(title, year):
-    games[title] = year
-
-
+    games.update({title: year})
 # remove_game(title): Removes a game from the inventory.
 def remove_game(title):
     if title in games:
-        del games[title]
+        games.pop(title)
     else:
         print(f"{title} not found in inventory.")
 
@@ -31,7 +29,7 @@ def remove_game(title):
 def display_inventory():
     count = 1
     for game in games:
-        print(f"   {str(count)}. {game} by {games[game]}")
+        print(f"{str(count)}. {game} by {games[game]}")
         count += 1
     print()
 
@@ -40,13 +38,13 @@ def search_year(year):
     print(f"All games from {year}:")
     for game in games:
         if games[game] == year:
-            print(f"   {game}")
+            print(f"{game}")
 
 
 # search_title(title)
 def search_title(title):
     if title in games:
-        print(f"{title} was released in {games[title]}.")
+        print(f"{title} was released in", games[title])
     else:
         print(f"{title} not found in inventory.")
 
@@ -80,7 +78,7 @@ while True:
     if user_selection == "add":
         print("What game would you like to add?")
         title = input("Title: ")
-        year = input("Year released: ")
+        year = int(input("Year released: "))
 
 
         # update() will add to the dictionary if the key does not exist
@@ -90,9 +88,8 @@ while True:
     elif user_selection == "remove":
         game = input("What title would you like to remove? ")
 
-        games.pop(title)
+        remove_game(title)
         print(title + " was removed successfully.")
-        remove_game()
     
     elif user_selection == "show":
         # function 1:
@@ -109,11 +106,6 @@ while True:
 
     elif user_selection == "year":
         year = int(input("Which year would you like to seach for? "))
-
-        print(f"All games from {year}:")
-        for game in games:
-            if games[game] == year:
-                print(f"   {game}")
         search_year(year)
 
     elif user_selection == "title":
